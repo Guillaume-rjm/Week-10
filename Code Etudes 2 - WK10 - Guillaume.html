@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<head>
+  <div id="main"></div>
+</head>
+
+<script>
+
+async function fetch_url() {
+  let results = []
+  let url = "https://patrickmcneill.com/itp/urls.txt"
+    await $.get(url, function(data) {
+      list = data.split(" ");
+
+      for(let i = 0; i < data.length; i++){
+          results.push(list[i]);
+      }
+      var myDiv = document.getElementById('main');
+      myDiv.innerHTML = results;
+      console.log(Array.isArray(results))
+      console.log(list[0])
+    });
+}
+
+fetch_url();
+
+</script>
+
+
+
+</html>
