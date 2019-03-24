@@ -8,19 +8,20 @@
 <script>
 
 async function fetch_url() {
-  let results = []
+  let data = []
   let url = "https://patrickmcneill.com/itp/urls.txt"
-    await $.get(url, function(data) {
-      list = data.split(" ");
-
-      for(let i = 0; i < data.length; i++){
-          results.push(list[i]);
-      }
+    await $.get(url, '',function(data) {
+      let list = data.split('\n');
       var myDiv = document.getElementById('main');
-      myDiv.innerHTML = results;
-      console.log(Array.isArray(results))
-      console.log(list[0])
-    });
+      myDiv.innerHTML = list;
+
+      console.log(Array.isArray(list))
+      console.log(list)
+    },
+  'text'
+  );
+
+
 }
 
 fetch_url();
