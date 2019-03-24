@@ -1,0 +1,169 @@
+<html>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <head>
+        <title>Assignment 10 - Guillaume</title>
+        <style>
+
+      html
+      {
+          background-color: white;
+      }
+
+      img {
+        width: 300px;
+        height: 300px;
+      }
+
+      body
+      {
+          background-color:                   white;
+          font-family:                   sans-serif;
+          font-size:                           15px;
+          position:                        absolute;
+          height:                             768px;
+          width:                             1024px;
+      }
+
+      table {
+        border-collapse: collapse;
+      }
+
+      table th{
+        text-align: center;
+        border: 1px solid grey;
+        background-color: black;
+        color: white;
+        padding: 8px 50px 5px 15px;
+
+      }
+
+      table td {
+        text-align: center;
+        border: 1px solid grey;
+        padding: 4px 1px;
+
+      }
+
+      table tr: nth-child(odd) td {
+        background-color: #e7edf0;
+      }
+
+      </style>
+    </head>
+    <body>
+        <div id="main">
+          <table id="table">
+            <tr>
+              <th> Countries </th>
+              <th> Unemployment Rates 2017 (in %) </th>
+              <th> Other indicators to be added </th>
+            </tr>
+            <tr id="myRow">
+              <td id="col1"></td>
+              <td id="col2"></td>
+              <td id="col3"></td>
+            </tr>
+          </table>
+        </div>
+
+
+        <!-- <div id="Rates"></div> -->
+     </body>
+
+     <script>
+
+//Using a different method like the weather example
+
+var OECDRequest = new XMLHttpRequest();   // Create a new object that will make our request, and get back the information we want.
+var mycol1 = document.getElementById("col1");
+var mycol2 = document.getElementById("col2");
+var table = document.getElementById("table");
+// var myDiv2 = document.getElementById("Rates")
+
+OECDRequest.open('GET', 'https://stats.oecd.org/SDMX-JSON/data/LFS_SEXAGE_I_R/AUS+AUT+BEL+CAN+CHL+CZE+DNK+EST+FIN+FRA+DEU+GRC+HUN+ISL+IRL+ISR+ITA+JPN+KOR+LVA+LUX+MEX+NLD+NZL+NOR+POL+PRT+SVK+SVN+ESP+SWE+CHE+TUR+GBR+USA+OECD+COL+CRI+LTU+BRA+CHN+IND+IDN+RUS+ZAF.MW.1564.UR.A/all?startTime=2017&endTime=2017&dimensionAtObservation=allDimensions'); // Give the Request the address of the API endpoint
+
+OECDRequest.send(null); // Send the request
+
+// When the request comes back, that will be seen by Javascript as a "state change." This function will run when that event happens.
+
+OECDRequest.onreadystatechange = function () {
+
+
+var DONE = 4; // readyState 4 means the request is done.
+
+var OK = 200; // status 200 is a successful return.
+
+if (OECDRequest.readyState === DONE) {
+
+if (OECDRequest.status === OK) {
+
+ // Now we have our response data, it currently lives at nwsRequest.responseText as a long string of data like we saw in our browser. Let's turn that into a Javascript object that we can work with.
+
+  var OECDResponse = JSON.parse(OECDRequest.responseText);
+
+
+// Unemployment Rates + Countries loop
+  let unemploymentRates = OECDResponse.dataSets[0].observations;
+  let countries = OECDResponse.structure.dimensions.observation[0].values;
+  let a = 0;
+  for(let val in unemploymentRates){
+    let countriesList = countries[a].name;
+    let UR_List = unemploymentRates[val][0];
+    let UR_Listappx = UR_List.toFixed(2);
+    a++;
+
+      countryListArray = countriesList.split('\n');
+      UR_ListArray = UR_Listappx.split('\n');
+      // console.log(Array.isArray(UR_ListArray));
+
+      console.log(Array.from(countryListArray))
+      // console.log(countryListArray);
+
+
+      // console.log(countryListArray);
+
+//Printing each letter of Array in cells...need to fix Array
+            for (let i = 0; i < countryListArray.length; i++){
+
+              let newRow = table.insertRow(table.length);
+                for (let j = 0; j < countryListArray[i].length; j++) {
+                  let cell = newRow.insertCell(j);
+                  cell.innerHTML = countryListArray[i][j]
+                }
+              }
+
+
+//Those are working but only input the data in the first cell
+      let countrycolumn = document.createElement('tr');
+      countrycolumn.innerHTML = countryListArray + ": ";
+      mycol1.appendChild(countrycolumn);
+
+      let URcolumn = document.createElement('tr');
+      URcolumn.innerHTML = UR_ListArray;
+      mycol2.appendChild(URcolumn);
+
+}
+
+  }
+
+}
+
+// } else {
+
+// console.log(''); // An error occurred during the request.
+// console.log(OECDResponse.dataSets[0].observations['0:0:0:0:0:0'][0])
+}
+
+// }
+//
+// };
+
+
+     </script>
+<!--
+     <script
+      src='https://stats.oecd.org/SDMX-JSON/data/LFS_SEXAGE_I_R/AUS+AUT+BEL+CAN+CHL+CZE+DNK+EST+FIN+FRA+DEU+GRC+HUN+ISL+IRL+ISR+ITA+JPN+KOR+LVA+LUX+MEX+NLD+NZL+NOR+POL+PRT+SVK+SVN+ESP+SWE+CHE+TUR+GBR+USA+OECD+COL+CRI+LTU+BRA+CHN+IND+IDN+RUS+ZAF.MW.1564.UR.A/all?startTime=2017&endTime=2017&dimensionAtObservation=allDimensions&jsonp&callback=UnemploymentRates'>
+     </script> -->
+
+
+</html>
