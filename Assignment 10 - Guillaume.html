@@ -26,6 +26,7 @@
 
       table {
         border-collapse: collapse;
+        width: 1500;
       }
 
       table th{
@@ -33,14 +34,17 @@
         border: 1px solid grey;
         background-color: black;
         color: white;
-        padding: 8px 50px 5px 15px;
+        padding: 8px 10px 5px 15px;
 
+      }
+      table tr{
+        text-align: center;
       }
 
       table td {
         text-align: center;
         border: 1px solid grey;
-        padding: 4px 1px;
+        padding: 5px 1px;
 
       }
 
@@ -49,19 +53,28 @@
       }
 
       </style>
+          Unemployment rates variation 2016-2018 <br>
+          (OECD Countries)
     </head>
+
+  <br>
     <body>
         <div id="main">
           <table id="table">
             <tr>
-              <th> Countries </th>
+                <br>
+              <th> List of Countries OECD </th>
+              <th> Unemployment Rates 2016 (in %) </th>
               <th> Unemployment Rates 2017 (in %) </th>
+              <th> Unemployment Rates 2018 (in %) </th>
+              <th> Unemployment Rates Variation </th>
               <th> Other indicators to be added </th>
             </tr>
             <tr id="myRow">
               <td id="col1"></td>
               <td id="col2"></td>
               <td id="col3"></td>
+              <td id="col4"></td>
             </tr>
           </table>
         </div>
@@ -77,6 +90,7 @@
 var OECDRequest = new XMLHttpRequest();   // Create a new object that will make our request, and get back the information we want.
 var mycol1 = document.getElementById("col1");
 var mycol2 = document.getElementById("col2");
+var mycol3 = document.getElementById("col3");
 var table = document.getElementById("table");
 // var myDiv2 = document.getElementById("Rates")
 
@@ -135,12 +149,12 @@ if (OECDRequest.status === OK) {
 
 //Those are working but only input the data in the first cell
       let countrycolumn = document.createElement('tr');
-      countrycolumn.innerHTML = countryListArray + ": ";
+      countrycolumn.innerHTML = countryListArray+ ": ";
       mycol1.appendChild(countrycolumn);
 
       let URcolumn = document.createElement('tr');
       URcolumn.innerHTML = UR_ListArray;
-      mycol2.appendChild(URcolumn);
+      mycol3.appendChild(URcolumn);
 
 }
 
